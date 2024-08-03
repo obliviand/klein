@@ -263,9 +263,9 @@ namespace detail
                                       __m128* KLN_RESTRICT out) noexcept
     {
         // (-a1 b1 - a3 b3 - a2 b2) +
-        // (a2 b1 - a1 b2) e12 +
-        // (a1 b3 - a3 b1) e31 +
         // (a3 b2 - a2 b3) e23 +
+        // (a1 b3 - a3 b1) e31 +
+        // (a2 b1 - a1 b2) e12 +
         // (a1 c1 + a3 c3 + a2 c2 + b1 d1 + b3 d3 + b2 d2) e0123
         // (a3 c2 - a2 c3         + b2 d3 - b3 d2) e01 +
         // (a1 c3 - a3 c1         + b3 d1 - b1 d3) e02 +
@@ -280,11 +280,11 @@ namespace detail
         __m128& p1 = *out;
         __m128& p2 = *(out + 1);
 
-        p1 = _mm_mul_ps(KLN_SWIZZLE(a, 3, 1, 2, 1), KLN_SWIZZLE(b, 2, 3, 1, 1));
+        p1 = _mm_mul_ps(KLN_SWIZZLE(a, 2, 1, 3, 1), KLN_SWIZZLE(b, 1, 3, 2, 1));
         p1 = _mm_xor_ps(p1, flip);
         p1 = _mm_sub_ps(
             p1,
-            _mm_mul_ps(KLN_SWIZZLE(a, 2, 3, 1, 3), KLN_SWIZZLE(b, 3, 1, 2, 3)));
+            _mm_mul_ps(KLN_SWIZZLE(a, 1, 3, 2, 3), KLN_SWIZZLE(b, 2, 1, 3, 3)));
         __m128 a2 = _mm_unpackhi_ps(a, a);
         __m128 b2 = _mm_unpackhi_ps(b, b);
         p1        = _mm_sub_ss(p1, _mm_mul_ss(a2, b2));
