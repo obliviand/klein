@@ -65,11 +65,6 @@ public:
     void normalize() noexcept
     {
         __m128 inv_norm = detail::rsqrt_nr1(detail::hi_dp_bc(p0_, p0_));
-#ifdef KLEIN_SSE_4_1
-        inv_norm = _mm_blend_ps(inv_norm, _mm_set_ss(1.f), 1);
-#else
-        inv_norm = _mm_move_ss(inv_norm, _mm_set_ss(1.f));
-#endif
         p0_ = _mm_mul_ps(inv_norm, p0_);
     }
 
