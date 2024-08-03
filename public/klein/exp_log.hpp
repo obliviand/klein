@@ -122,7 +122,11 @@ namespace kln
 /// Compute the square root of the provided rotor $r$.
 [[nodiscard]] inline rotor KLN_VEC_CALL sqrt(rotor r) noexcept
 {
-    r.p1_ = _mm_add_ss(r.p1_, _mm_set_ss(1.f));
+    if (r.scalar() >= 0.f) {
+        r.p1_ = _mm_add_ss(r.p1_, _mm_set_ss(1.f));
+    } else {
+        r.p1_ = _mm_add_ss(r.p1_, _mm_set_ss(-1.f));
+    }
     r.normalize();
     return r;
 }
@@ -145,7 +149,12 @@ namespace kln
 /// Compute the square root of the provided motor $m$.
 [[nodiscard]] inline motor KLN_VEC_CALL sqrt(motor m) noexcept
 {
-    m.p1_ = _mm_add_ss(m.p1_, _mm_set_ss(1.f));
+    if (m.scalar() >= 0.f) {
+        m.p1_ = _mm_add_ss(m.p1_, _mm_set_ss(1.f));
+    } else {
+        m.p1_ = _mm_add_ss(m.p1_, _mm_set_ss(-1.f));
+    }
+
     m.normalize();
     return m;
 }
