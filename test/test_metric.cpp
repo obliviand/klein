@@ -33,6 +33,42 @@ TEST_CASE("measure-point-to-plane")
     CHECK_EQ(std::abs((p1 ^ p2).e0123()), root_two);
 }
 
+TEST_CASE("plane-normalize")
+{
+    // d*e_0 + a*e_1 + b*e_2 + c*e_3
+    plane p{1.f, 2.f, 3.f, 4.f};
+
+    p.normalize();
+
+    CHECK_EQ(p.e0(), doctest::Approx(1.069f).epsilon(0.001));
+    CHECK_EQ(p.e1(), doctest::Approx(0.267f).epsilon(0.001));
+    CHECK_EQ(p.e2(), doctest::Approx(0.534f).epsilon(0.001));
+    CHECK_EQ(p.e3(), doctest::Approx(0.801f).epsilon(0.001));
+}
+
+TEST_CASE("normalized-plane-normalization")
+{
+    point a{-0.5, 2, -0.5};
+    point b{+0.5, 2, -0.5};
+    point c{+0.5, 2, +0.5};
+
+    // p is already normalized
+    plane p = a & b & c;
+    CHECK_EQ(p.norm(), 1);
+    CHECK_EQ(p.e0(), -2);
+    CHECK_EQ(p.e1(), 0);
+    CHECK_EQ(p.e2(), 1);
+    CHECK_EQ(p.e3(), 0);
+
+    p.normalize();
+    // same checks as before
+    CHECK_EQ(p.norm(), 1);
+    CHECK_EQ(p.e0(), -2);
+    CHECK_EQ(p.e1(), 0);
+    CHECK_EQ(p.e2(), 1);
+    CHECK_EQ(p.e3(), 0);
+}
+
 TEST_CASE("measure-point-to-line")
 {
     line l{0, 1, 0, 1, 0, 0};
