@@ -123,7 +123,7 @@ TEST_CASE("multivector-gp")
         l1.normalize();
         l2.normalize();
         line l3 = sqrt(l1 * l2)(l2);
-        CHECK_EQ(l3.approx_eq(-l1, 0.001f), true);
+        CHECK_EQ(l3.approx_eq(l1, 0.001f), true);
 
         // motor from y-axis to x-axis
         l1 = (origin() & point(1,0,0)); // x-axis
@@ -133,7 +133,7 @@ TEST_CASE("multivector-gp")
         l2.normalize();
 
         l3 = sqrt(l1 * l2)(l2);
-        CHECK_EQ(l3.approx_eq(-l1, 0.001f), true);
+        CHECK_EQ(l3.approx_eq(l1, 0.001f), true);
 
         // motor from z-axis to x-axis
         l1 = (origin() & point(1,0,0)); // x-axis
@@ -143,7 +143,7 @@ TEST_CASE("multivector-gp")
         l2.normalize();
 
         l3 = sqrt(l1 * l2)(l2);
-        CHECK_EQ(l3.approx_eq(-l1, 0.001f), true);
+        CHECK_EQ(l3.approx_eq(l1, 0.001f), true);
 
         // motor from z-axis to y-axis
         l1 = (origin() & point(0,1,0)); // y-axis
@@ -153,7 +153,7 @@ TEST_CASE("multivector-gp")
         l2.normalize();
 
         l3 = sqrt(l1 * l2)(l2);
-        CHECK_EQ(l3.approx_eq(-l1, 0.001f), true);
+        CHECK_EQ(l3.approx_eq(l1, 0.001f), true);
     }
 
     SUBCASE("line/line")
